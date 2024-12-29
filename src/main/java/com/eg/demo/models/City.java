@@ -14,27 +14,21 @@ public class City {
 	
 	
 
+	
+
+
 	@Column
 	private String city;
 	
-	@OneToMany(mappedBy = "cityObj",cascade = CascadeType.ALL) //(current class name)cityObj matches city and college var name
-	private List<College> collegeObj;   // next (referred class name)
+//	@OneToMany(mappedBy = "cityObj",cascade = CascadeType.ALL) //(current class name)cityObj matches city and college var name
+//	private List<College> collegeObj;   // next (referred class name)
 	
+	public City() {}
 	
-	//constructor
-	public City(Long city_id, String city, List<College> collegeObj) {
+	public City(Long city_id, String city) {
 		super();
 		this.city_id = city_id;
 		this.city = city;
-		this.collegeObj = collegeObj;
-	}
-
-	public List<College> getCollegeObj() {
-		return collegeObj;
-	}
-
-	public void setCollegeObj(List<College> collegeObj) {
-		this.collegeObj = collegeObj;
 	}
 
 	public Long getCity_id() {
