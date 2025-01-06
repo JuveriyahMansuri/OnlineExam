@@ -45,11 +45,11 @@ public class Difficulty_levelController {
     // 4.Update a city by ID
     @PutMapping("/{id}")
     public Difficulty_level updateDifficulty_level(@PathVariable Long id, @RequestBody Difficulty_level difficulty_levelObj) {
-        return difficulty_levelRepositoryObj.findById(id).map(difficulty_level -> {
+        return difficulty_levelRepositoryObj.findById(id).map(existingDifficulty_level -> {
         	
-            difficulty_level.setDifficulty_level(difficulty_levelObj.getDifficulty_level());
+        	existingDifficulty_level.setDifficulty_level(difficulty_levelObj.getDifficulty_level());
             
-            return difficulty_levelRepositoryObj.save(difficulty_level);
+            return difficulty_levelRepositoryObj.save(existingDifficulty_level);
         }
         ).orElseThrow(() -> new RuntimeException("Difficulty level not found for ID: " + id));
     }

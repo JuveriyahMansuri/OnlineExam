@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,31 +63,31 @@ public class Exam_questionController {
                 .orElseThrow(() -> new RuntimeException("ExamQuestion not found for ID: " + id));
     }
 
-//    // Update an exam-question relationship
-//    @PutMapping("/{id}")
-//    public ExamQuestion updateExamQuestion(@PathVariable Long id, @RequestBody ExamQuestion examQuestionDetails) {
-//        return examQuestionRepositoryObj.findById(id).map(existingExamQuestion -> {
-//            // Update relationships if provided
-//            if (examQuestionDetails.getExam() != null) {
-//                Exam examObj = examRepositoryObj.findById(examQuestionDetails.getExam().getExam_id())
-//                        .orElseThrow(() -> new RuntimeException("Exam not found"));
-//                existingExamQuestion.setExam(examObj);
-//            }
-//
-//            if (examQuestionDetails.getQuestion() != null) {
-//                Question questionObj = questionRepositoryObj.findById(examQuestionDetails.getQuestion().getQuestion_id())
-//                        .orElseThrow(() -> new RuntimeException("Question not found"));
-//                existingExamQuestion.setQuestion(questionObj);
-//            }
-//
-//            return examQuestionRepositoryObj.save(existingExamQuestion);
-//        }).orElseThrow(() -> new RuntimeException("ExamQuestion not found for ID: " + id));
-//    }
+   // Update an exam-question relationship
+    @PutMapping("/{id}")
+    public Exam_question updateExam_question(@PathVariable Long id, @RequestBody Exam_question exam_questionObj) {
+        return exam_questionRepositoryObj.findById(id).map(existingExam_question -> {
+            // Update relationships if provided
+            if (exam_questionObj.getExamObj() != null) {
+                Exam examObj = examRepositoryObj.findById(exam_questionObj.getExamObj().getExam_id())
+                        .orElseThrow(() -> new RuntimeException("Exam not found"));
+                existingExam_question.setExamObj(examObj);
+            }
 
-//    // Delete an exam-question relationship
-//    @DeleteMapping("/{id}")
-//    public void deleteExamQuestion(@PathVariable Long id) {
-//        examQuestionRepositoryObj.deleteById(id);
-//    }
+            if (exam_questionObj.getQuestionObj() != null) {
+                Question questionObj = questionRepositoryObj.findById(exam_questionObj.getQuestionObj().getQuestion_id())
+                        .orElseThrow(() -> new RuntimeException("Question not found"));
+                existingExam_question.setQuestionObj(questionObj);
+            }
+
+            return exam_questionRepositoryObj.save(existingExam_question);
+        }).orElseThrow(() -> new RuntimeException("ExamQuestion not found for ID: " + id));
+    }
+
+    // Delete an exam-question relationship
+    @DeleteMapping("/{id}")
+    public void deleteExam_question(@PathVariable Long id) {
+        exam_questionRepositoryObj.deleteById(id);
+    }
 	
 }

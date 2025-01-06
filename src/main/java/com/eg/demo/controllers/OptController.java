@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,28 +52,28 @@ public class OptController {
 	                .orElseThrow(() -> new RuntimeException("Option not found for ID: " + id));
 	    }
 
-//	    // Update an option by ID
-//	    @PutMapping("/{id}")
-//	    public Option updateOption(@PathVariable Long id, @RequestBody Option optionDetails) {
-//	        return optionRepositoryObj.findById(id).map(existingOption -> {
-//	            existingOption.setOption_name(optionDetails.getOption_name());
-//	            existingOption.setCorrect(optionDetails.isCorrect());
-//
-//	            // Update the question association if provided
-//	            if (optionDetails.getQuestion() != null) {
-//	                Question questionObj = questionRepositoryObj.findById(optionDetails.getQuestion().getQuestion_id())
-//	                        .orElseThrow(() -> new RuntimeException("Question not found"));
-//	                existingOption.setQuestion(questionObj);
-//	            }
-//
-//	            return optionRepositoryObj.save(existingOption);
-//	        }).orElseThrow(() -> new RuntimeException("Option not found for ID: " + id));
-//	    }
+	    // Update an option by ID
+	    @PutMapping("/{id}")
+	    public Opt updateOption(@PathVariable Long id, @RequestBody Opt optObj) {
+	        return optRepositoryObj.findById(id).map(existingOption -> {
+	            existingOption.setOption_name(optObj.getOption_name());
+	            existingOption.setCorrect(optObj.isCorrect());
 
-//	    // Delete an option by ID
-//	    @DeleteMapping("/{id}")
-//	    public void deleteOption(@PathVariable Long id) {
-//	        optionRepositoryObj.deleteById(id);
-//	    }
+	            // Update the question association if provided
+	            if (optObj.getQuestionObj() != null) {
+	                Question questionObj = questionRepositoryObj.findById(optObj.getQuestionObj().getQuestion_id())
+	                        .orElseThrow(() -> new RuntimeException("Question not found"));
+	                existingOption.setQuestionObj(questionObj);
+	            }
+
+	            return optRepositoryObj.save(existingOption);
+	        }).orElseThrow(() -> new RuntimeException("Option not found for ID: " + id));
+	    }
+
+	    // Delete an option by ID
+	    @DeleteMapping("/{id}")
+	    public void deleteOption(@PathVariable Long id) {
+	        optRepositoryObj.deleteById(id);
+	    }
 
 }

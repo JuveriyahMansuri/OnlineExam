@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,36 +64,37 @@ public class QuestionController {
                 .orElseThrow(() -> new RuntimeException("Question not found for ID: " + id));
     }
 
-//    // Update a question by ID
-//    @PutMapping("/{id}")
-//    public Question updateQuestion(@PathVariable Long id, @RequestBody Question questionDetails) {
-//        return questionRepositoryObj.findById(id).map(existingQuestion -> {
-//            existingQuestion.setQuestion(questionDetails.getQuestion());
-//
-//            // Update category if provided
-//            if (questionDetails.getCategory() != null) {
-//                Category categoryObj = categoryRepositoryObj
-//                        .findById(questionDetails.getCategory().getCategory_id())
-//                        .orElseThrow(() -> new RuntimeException("Category not found"));
-//                existingQuestion.setCategory(categoryObj);
-//            }
-//
-//            // Update difficulty level if provided
-//            if (questionDetails.getDifficultyLevel() != null) {
-//                DifficultyLevel difficultyLevelObj = difficultyLevelRepositoryObj
-//                        .findById(questionDetails.getDifficultyLevel().getDifficulty_level_id())
-//                        .orElseThrow(() -> new RuntimeException("Difficulty Level not found"));
-//                existingQuestion.setDifficultyLevel(difficultyLevelObj);
-//            }
-//
-//            return questionRepositoryObj.save(existingQuestion);
-//        }).orElseThrow(() -> new RuntimeException("Question not found for ID: " + id));
-//    }
+    // Update a question by ID
+    @PutMapping("/{id}")
+    public Question updateQuestion(@PathVariable Long id, @RequestBody Question questionObj) {
+        return questionRepositoryObj.findById(id).map(existingQuestion -> {
+        	
+            existingQuestion.setQuestion(questionObj.getQuestion());
 
-//    // Delete a question by ID
-//    @DeleteMapping("/{id}")
-//    public void deleteQuestion(@PathVariable Long id) {
-//        questionRepositoryObj.deleteById(id);
-//    }
+            // Update category if provided
+            if (questionObj.getCategoryObj() != null) {
+                Category categoryObj = categoryRepositoryObj
+                        .findById(questionObj.getCategoryObj().getCategory_id())
+                        .orElseThrow(() -> new RuntimeException("Category not found"));
+                existingQuestion.setCategoryObj(categoryObj);
+            }
+
+            // Update difficulty level if provided
+            if (questionObj.getDifficulty_levelObj() != null) {
+                Difficulty_level difficultyLevelObj = difficultyLevelRepositoryObj
+                        .findById(questionObj.getDifficulty_levelObj().getDifficulty_level_id())
+                        .orElseThrow(() -> new RuntimeException("Difficulty Level not found"));
+                existingQuestion.setDifficulty_levelObj(difficultyLevelObj);
+            }
+
+            return questionRepositoryObj.save(existingQuestion);
+        }).orElseThrow(() -> new RuntimeException("Question not found for ID: " + id));
+    }
+
+    // Delete a question by ID
+    @DeleteMapping("/{id}")
+    public void deleteQuestion(@PathVariable Long id) {
+        questionRepositoryObj.deleteById(id);
+   }
 	
 }

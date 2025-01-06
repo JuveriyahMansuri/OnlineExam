@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,20 +41,20 @@ public class CategoryController {
                 .orElseThrow(() -> new RuntimeException("Category not found for ID: " + id));
     }
 
-//    // Update a category by ID
-//    @PutMapping("/{id}")
-//    public Category updateCategory(@PathVariable int id, @RequestBody Category categoryDetails) {
-//        return categoryRepositoryObj.findById(id).map(category -> {
-//            category.setCategoryName(categoryDetails.getCategoryName());
-//            return categoryRepositoryObj.save(category);
-//        }).orElseThrow(() -> new RuntimeException("Category not found for ID: " + id));
-//    }
+    // Update a category by ID
+    @PutMapping("/{id}")
+    public Category updateCategory(@PathVariable Long id, @RequestBody Category categoryObj) {
+        return categoryRepositoryObj.findById(id).map(existingCategory -> {
+        	existingCategory.setCategory_name(categoryObj.getCategory_name());
+            return categoryRepositoryObj.save(existingCategory);
+        }).orElseThrow(() -> new RuntimeException("Category not found for ID: " + id));
+    }
 
-//    // Delete a category by ID
-//    @DeleteMapping("/{id}")
-//    public void deleteCategory(@PathVariable int id) {
-//        categoryRepositoryObj.deleteById(id);
-//    }
+    // Delete a category by ID
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable Long id) {
+        categoryRepositoryObj.deleteById(id);
+    }
 
 	
 }

@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,36 +62,36 @@ public class Student_programmingController {
                 .orElseThrow(() -> new RuntimeException("StudentProgramming record not found for ID: " + id));
     }
 
-//    // Update a student programming record
-//    @PutMapping("/{id}")
-//    public StudentProgramming updateStudentProgramming(@PathVariable Long id, @RequestBody StudentProgramming studentProgrammingDetails) {
-//        return student_programmingRepositoryObj.findById(id).map(existingStudentProgramming -> {
-//            // Update relationships if provided
-//            if (studentProgrammingDetails.getStudent() != null) {
-//                User studentObj = userRepositoryObj.findById(studentProgrammingDetails.getStudent().getUser_id())
-//                        .orElseThrow(() -> new RuntimeException("Student not found"));
-//                existingStudentProgramming.setStudent(studentObj);
-//            }
-//
-//            if (studentProgrammingDetails.getProgramming() != null) {
-//                Programming programmingObj = programmingRepositoryObj.findById(studentProgrammingDetails.getProgramming().getProgramming_id())
-//                        .orElseThrow(() -> new RuntimeException("Programming question not found"));
-//                existingStudentProgramming.setProgramming(programmingObj);
-//            }
-//
-//            // Update other fields
-//            existingStudentProgramming.setUser_output(studentProgrammingDetails.getUser_output());
-//            existingStudentProgramming.setCode_submitted(studentProgrammingDetails.getCode_submitted());
-//            existingStudentProgramming.setCorrect(studentProgrammingDetails.isCorrect());
-//
-//            return studentProgrammingRepositoryObj.save(existingStudentProgramming);
-//        }).orElseThrow(() -> new RuntimeException("StudentProgramming record not found for ID: " + id));
-//    }
-//
-//    // Delete a student programming record
-//    @DeleteMapping("/{id}")
-//    public void deleteStudentProgramming(@PathVariable Long id) {
-//        student_programmingRepositoryObj.deleteById(id);
-//    }
+    // Update a student programming record
+    @PutMapping("/{id}")
+    public Student_programming updateStudent_programming(@PathVariable Long id, @RequestBody Student_programming student_programmingObj) {
+        return student_programmingRepositoryObj.findById(id).map(existingStudent_programming -> {
+            // Update relationships if provided
+            if (student_programmingObj.getUserObj() != null) {
+                User userObj = userRepositoryObj.findById(student_programmingObj.getUserObj().getUser_id())
+                        .orElseThrow(() -> new RuntimeException("Student not found"));
+                existingStudent_programming.setUserObj(userObj);
+            }
+
+            if (student_programmingObj.getProgrammingObj() != null) {
+                Programming programmingObj = programmingRepositoryObj.findById(student_programmingObj.getProgrammingObj().getProgramming_id())
+                        .orElseThrow(() -> new RuntimeException("Programming question not found"));
+                existingStudent_programming.setProgrammingObj(programmingObj);
+            }
+
+            // Update other fields
+            existingStudent_programming.setUser_output(student_programmingObj.getUser_output());
+            existingStudent_programming.setCode_submitted(student_programmingObj.getCode_submitted());
+            existingStudent_programming.setCorrect(student_programmingObj.isCorrect());
+
+            return student_programmingRepositoryObj.save(existingStudent_programming);
+        }).orElseThrow(() -> new RuntimeException("StudentProgramming record not found for ID: " + id));
+    }
+
+    // Delete a student programming record
+    @DeleteMapping("/{id}")
+    public void deleteStudent_programming(@PathVariable Long id) {
+        student_programmingRepositoryObj.deleteById(id);
+    }
 
 }

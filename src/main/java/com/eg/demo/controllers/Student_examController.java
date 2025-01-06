@@ -3,9 +3,11 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,35 +63,35 @@ public class Student_examController {
 	                .orElseThrow(() -> new RuntimeException("StudentExam record not found for ID: " + id));
 	    }
 
-//	    // Update a student exam record
-//	    @PutMapping("/{id}")
-//	    public StudentExam updateStudentExam(@PathVariable Long id, @RequestBody StudentExam studentExamDetails) {
-//	        return student_examRepositoryObj.findById(id).map(existingStudentExam -> {
-//	            // Update relationships if provided
-//	            if (studentExamDetails.getStudent() != null) {
-//	                User studentObj = userRepositoryObj.findById(studentExamDetails.getStudent().getUser_id())
-//	                        .orElseThrow(() -> new RuntimeException("Student not found"));
-//	                existingStudentExam.setStudent(studentObj);
-//	            }
-//
-//	            if (studentExamDetails.getExam() != null) {
-//	                Exam examObj = examRepositoryObj.findById(studentExamDetails.getExam().getExam_id())
-//	                        .orElseThrow(() -> new RuntimeException("Exam not found"));
-//	                existingStudentExam.setExam(examObj);
-//	            }
-//
-//	            // Update other fields
-//	            existingStudentExam.setStudent_exam_start_datetime(studentExamDetails.getStudent_exam_start_datetime());
-//	            existingStudentExam.setPassed(studentExamDetails.isPassed());
-//
-//	            return studentExamRepositoryObj.save(existingStudentExam);
-//	        }).orElseThrow(() -> new RuntimeException("StudentExam record not found for ID: " + id));
-//	    }
-//
-//	    // Delete a student exam record
-//	    @DeleteMapping("/{id}")
-//	    public void deleteStudentExam(@PathVariable Long id) {
-//	        student_examRepositoryObj.deleteById(id);
-//	    }
+	    // Update a student exam record
+	    @PutMapping("/{id}")
+	    public Student_exam updateStudentExam(@PathVariable Long id, @RequestBody Student_exam student_examObj) {
+	        return student_examRepositoryObj.findById(id).map(existingStudent_exam -> {
+	            // Update relationships if provided
+	            if (student_examObj.getUserObj() != null) {
+	                User userObj = userRepositoryObj.findById(student_examObj.getUserObj().getUser_id())
+	                        .orElseThrow(() -> new RuntimeException("Student not found"));
+	                existingStudent_exam.setUserObj(userObj);
+	            }
+
+	            if (student_examObj.getExamObj() != null) {
+	                Exam examObj = examRepositoryObj.findById(student_examObj.getExamObj().getExam_id())
+	                        .orElseThrow(() -> new RuntimeException("Exam not found"));
+	                existingStudent_exam.setExamObj(examObj);
+	            }
+
+	            // Update other fields
+	            existingStudent_exam.setStudent_exam_start_datetime(student_examObj.getStudent_exam_start_datetime());
+	            existingStudent_exam.setPassed(student_examObj.isPassed());
+
+	            return student_examRepositoryObj.save(existingStudent_exam);
+	        }).orElseThrow(() -> new RuntimeException("StudentExam record not found for ID: " + id));
+	    }
+
+	    // Delete a student exam record
+	    @DeleteMapping("/{id}")
+	    public void deleteStudent_exam(@PathVariable Long id) {
+	        student_examRepositoryObj.deleteById(id);
+	    }
 	    
 }

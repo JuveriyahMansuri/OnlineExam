@@ -3,12 +3,7 @@ package com.eg.demo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.eg.demo.models.*;
 import com.eg.demo.models.Student_details;
@@ -59,22 +54,22 @@ public class Student_detailsController {
 	                .orElseThrow(() -> new RuntimeException("StudentDetails not found for ID: " + id));
 	    }
 //
-//	    // Update student details by ID
-//	    @PutMapping("/{id}")
-//	    public StudentDetails updateStudentDetails(@PathVariable int id, @RequestBody StudentDetails studentDetails) {
-//	        return studentDetailsRepositoryObj.findById(id).map(existingStudentDetails -> {
-//	            existingStudentDetails.setCgpa(studentDetails.getCgpa());
-//	            existingStudentDetails.setHsc(studentDetails.getHsc());
-//	            existingStudentDetails.setSsc(studentDetails.getSsc());
-//	            existingStudentDetails.setUser(studentDetails.getUser());
-//	            existingStudentDetails.setCollege(studentDetails.getCollege());
-//	            return studentDetailsRepositoryObj.save(existingStudentDetails);
-//	        }).orElseThrow(() -> new RuntimeException("StudentDetails not found for ID: " + id));
-//	    }
-//
-//	    // Delete student details by ID
-//	    @DeleteMapping("/{id}")
-//	    public void deleteStudentDetails(@PathVariable int id) {
-//	        studentDetailsRepositoryObj.deleteById(id);
-//	    }
+	    // Update student details by ID
+	    @PutMapping("/{id}")
+	    public Student_details updateStudent_details(@PathVariable Long id, @RequestBody Student_details student_detailsObj) {
+	        return student_detailsRepositoryObj.findById(id).map(existingStudent_details -> {
+	            existingStudent_details.setCgpa(student_detailsObj.getCgpa());
+	            existingStudent_details.setHsc(student_detailsObj.getHsc());
+	            existingStudent_details.setSsc(student_detailsObj.getSsc());
+	            existingStudent_details.setUserObj(student_detailsObj.getUserObj());
+	            existingStudent_details.setCollegeObj(student_detailsObj.getCollegeObj());
+	            return student_detailsRepositoryObj.save(existingStudent_details);
+	        }).orElseThrow(() -> new RuntimeException("StudentDetails not found for ID: " + id));
+	    }
+
+	    // Delete student details by ID
+	    @DeleteMapping("/{id}")
+	    public void deleteStudentDetails(@PathVariable Long id) {
+	        student_detailsRepositoryObj.deleteById(id);
+	    }
 }

@@ -38,7 +38,7 @@ public class CityController {
         return cityRepositoryObj.findAll(); 
     }
     
-    // 3. get an city by ID (GET)
+    // 3. get city by ID (GET)
     @GetMapping("/{id}")
     public City getCityById(@PathVariable Long id) {
         return cityRepositoryObj.findById(id).orElseThrow(() -> new RuntimeException("City not found for ID: " + id)); // Retrieve employee by ID
